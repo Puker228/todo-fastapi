@@ -2,7 +2,7 @@ from sqlalchemy.orm import Mapped, mapped_column
 from sqlalchemy import Date
 from datetime import date
 
-from src.database import Base
+from app.database import Base
 
 
 class ToDo(Base):

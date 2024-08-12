@@ -2,7 +2,7 @@ from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
 from sqlalchemy.orm import DeclarativeBase
 
 
-engine = create_async_engine(url="sqlite+aiosqlite:///todo.db")
+engine = create_async_engine(url="sqlite+aiosqlite:///./app/db/todo.db")
 new_session = async_sessionmaker(bind=engine, expire_on_commit=False)
 
 
@@ -10,7 +10,7 @@ class Base(DeclarativeBase):
     pass
 
 
-async def create_tabel():
+async def create_tabels():
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
 
