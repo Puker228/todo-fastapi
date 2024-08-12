@@ -14,9 +14,7 @@ async def new_todo(todo: Annotated[STodo, Depends()]):
     return {"ok": True, "todo_id": todo_id}
 
 
-@router.get('/all-todos', response_model=list[STodo])
+@router.get("/all-todos", response_model=list[STodo])
 async def all_todos():
     todos = await ToDoCRUD.get_all()
-    return {
-        'data': todos
-    }
+    return todos

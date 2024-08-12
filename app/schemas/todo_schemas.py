@@ -8,8 +8,7 @@ class STodo(BaseModel):
     end_date: date | None = None
     important: bool = False
 
-    class Config:
-        orm_mode=True
+    model_config = ConfigDict(from_attributes=True)
 
 
 class STodo_id(BaseModel):
