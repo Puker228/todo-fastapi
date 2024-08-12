@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Mapped, mapped_column
-from sqlalchemy import Date
+from sqlalchemy import Date, Text
 from datetime import date
 
 from app.database import Base
@@ -10,6 +10,6 @@ class ToDo(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     name: Mapped[str]
-    description: Mapped[str | None]
+    description: Mapped[str | None] = mapped_column(Text)
     end_date: Mapped[date | None] = mapped_column(Date)
     important: Mapped[bool] = mapped_column(default=False)
