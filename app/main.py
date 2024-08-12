@@ -11,7 +11,7 @@ async def lifespan(app: FastAPI):
     await create_tabels()
     print("db is create")
     yield
-    print('exit')
+    print("exit")
 
 
 app = FastAPI(lifespan=lifespan)
