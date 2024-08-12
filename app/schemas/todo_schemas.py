@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 from datetime import date
 
 
@@ -7,6 +7,9 @@ class STodo(BaseModel):
     description: str | None = None
     end_date: date | None = None
     important: bool = False
+
+    class Config:
+        orm_mode=True
 
 
 class STodo_id(BaseModel):

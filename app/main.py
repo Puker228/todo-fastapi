@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from contextlib import asynccontextmanager
 
 from app.database import create_tabels, delete_tables
-from app.routers.todo import router as todo_router
+from app.routers.todo_routers import router as todo_router
 
 
 @asynccontextmanager

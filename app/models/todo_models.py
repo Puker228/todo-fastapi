@@ -13,3 +13,5 @@ class ToDo(Base):
     description: Mapped[str | None]
     end_date: Mapped[date | None] = mapped_column(Date)
     important: Mapped[bool] = mapped_column(default=False)
+
+
