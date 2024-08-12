@@ -9,6 +9,9 @@ __pycache__/
 # db
 *.db
 
+# macpuk
+.DS_Store
+
 # Distribution / packaging
 .Python
 build/
