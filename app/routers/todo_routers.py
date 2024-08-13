@@ -20,7 +20,7 @@ async def all_todos() -> list[STodo]:
     return todos
 
 
-@router.put('/update-todo/')
+@router.put("/update-todo/")
 async def update_todo(todo_id: int, new_data: Annotated[STodo, Depends()]):
     new_todo = await ToDoCRUD.update_one(todo_id=todo_id, data=new_data)
     return new_todo
