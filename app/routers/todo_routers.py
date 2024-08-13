@@ -8,13 +8,13 @@ from app.schemas.todo_schemas import STodo, STodo_id
 router = APIRouter(prefix="/todo", tags=["todos"])
 
 
-@router.post("/new-todo", response_model=STodo_id)
-async def new_todo(todo: Annotated[STodo, Depends()]):
+@router.post("/new-todo")
+async def new_todo(todo: Annotated[STodo, Depends()]) -> STodo_id:
     todo_id = await ToDoCRUD.add_one(todo)
     return {"ok": True, "todo_id": todo_id}
 
 
-@router.get("/all-todos", response_model=list[STodo])
-async def all_todos():
+@router.get("/all-todos")
+async def all_todos() -> list[STodo]:
     todos = await ToDoCRUD.get_all()
     return todos
