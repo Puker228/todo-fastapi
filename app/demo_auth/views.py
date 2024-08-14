@@ -1,8 +1,10 @@
 import secrets
+import uuid
 
-from fastapi import APIRouter, Depends, HTTPException, status, Header
+from fastapi import APIRouter, Depends, HTTPException, status, Header, Response
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from typing import Annotated
+from time import time
 
 router = APIRouter(prefix="/demo-auth", tags=["Demo auth"])
 
@@ -16,6 +18,9 @@ static_auth_token_to_username = {
     "78632760c617484597e55174781e8b11": "admin",
     "054096a23303a96cd662911f4f11f0ae": "password",
 }
+
+COOKIES: dict[str, dict] = {}
+COOKIES_SESSION_ID_KEY = "web-app-session-id"
 
 
 def get_auth_user_username(
@@ -51,6 +56,10 @@ def get_username_by_static_auth_token(
     return static_auth_token_to_username[static_token]
 
 
+def generate_session_id() -> str:
+    return uuid.uuid4().hex
+
+
 @router.get("/basic-auth/")
 async def demo_basic_auth_credentials(
     credentials: Annotated[HTTPBasicCredentials, Depends(security)]
@@ -80,3 +89,19 @@ async def demo_auth_some_http_header(
         "message": f"hi, {username}",
         "username": username,
     }
+
+
+@router.post("/login-cookie/")
+async def demo_auth_login_set_cookies(
+    response: Response,
+    auth_username: str = Depends(get_auth_user_username),
+):
+    session_id = generate_session_id()
+    COOKIES[session_id] = {"username": auth_username, "login_at": int(time())}
+    response.set_cookie(COOKIES_SESSION_ID_KEY, session_id)
+    return {"res": "ok"}
+
+
+@router.get("/check-cookie/")
+async def demo_auth_check_cookie():
+    pass
