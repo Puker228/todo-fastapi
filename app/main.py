@@ -3,7 +3,7 @@ from contextlib import asynccontextmanager
 
 from app.database import create_tabels, delete_tables
 from app.routers.todo_routers import router as todo_router
-from app.routers.auth_items import router as item_router
+from app.demo_auth.views import router as demo_auth_router
 
 
 @asynccontextmanager
@@ -18,7 +18,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(lifespan=lifespan)
 app.include_router(todo_router)
-app.include_router(item_router)
+app.include_router(demo_auth_router)
 
 
 @app.get("/")
