@@ -12,6 +12,9 @@ __pycache__/
 # macpuk
 *.DS_Store
 
+# certs
+certs/
+
 # Distribution / packaging
 .Python
 build/
