@@ -1,7 +1,7 @@
 import secrets
 import uuid
 
-from fastapi import APIRouter, Depends, HTTPException, status, Header, Response
+from fastapi import APIRouter, Depends, HTTPException, status, Header, Response, Cookie
 from fastapi.security import HTTPBasic, HTTPBasicCredentials
 from typing import Annotated
 from time import time
@@ -91,6 +91,14 @@ async def demo_auth_some_http_header(
     }
 
 
+def get_session_data(
+    session_id: str = Cookie(alias=COOKIES_SESSION_ID_KEY),
+):
+    if session_id not in COOKIES:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="not auth")
+    return COOKIES[session_id]
+
+
 @router.post("/login-cookie/")
 async def demo_auth_login_set_cookies(
     response: Response,
@@ -103,5 +111,23 @@ async def demo_auth_login_set_cookies(
 
 
 @router.get("/check-cookie/")
-async def demo_auth_check_cookie():
-    pass
+async def demo_auth_check_cookie(user_session_data: dict = Depends(get_session_data)):
+    username = user_session_data["username"]
+    return {
+        "message": f"Hello {username}",
+        **user_session_data,
+    }
+
+
+@router.post("/logout-cookie/")
+async def demo_auth_logout_cookies(
+    respone: Response,
+    session_id: str = Cookie(alias=COOKIES_SESSION_ID_KEY),
+    user_session_data: dict = Depends(get_session_data),
+):
+    COOKIES.pop(session_id)
+    respone.delete_cookie(COOKIES_SESSION_ID_KEY)
+    username = user_session_data["username"]
+    return {
+        "message": f"Bye {username}",
+    }
