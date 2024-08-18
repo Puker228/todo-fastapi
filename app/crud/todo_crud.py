@@ -36,3 +36,10 @@ class ToDoCRUD:
             await session.execute(query)
             await session.commit()
             return data
+
+    @classmethod
+    async def get_one_by_id(cls, todo_id: int):
+        async with new_session() as session:
+            query = select(ToDo).filter_by(id=todo_id)
+            result = await session.execute(query)
+            return result.scalars().one_or_none()

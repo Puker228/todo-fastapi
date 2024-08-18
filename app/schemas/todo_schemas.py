@@ -14,3 +14,7 @@ class STodo(BaseModel):
 class STodo_id(BaseModel):
     succes: bool = True
     todo_id: int
+
+
+class STodoById(STodo):
+    id: int
