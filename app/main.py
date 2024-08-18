@@ -9,9 +9,7 @@ from app.routers.user_routers import router as user_router
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     await delete_tables()
-    print("db is clear")
     await create_tabels()
-    print("db is create")
     yield
     print("exit")
 
