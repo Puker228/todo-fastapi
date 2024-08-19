@@ -1,8 +1,4 @@
-from sqlalchemy import select, update
-
 from app.crud.base_crud import BaseCRUD
-from app.schemas.todo_schemas import STodo
-from app.database import new_session
 from app.models.todo_models import ToDo
 
 

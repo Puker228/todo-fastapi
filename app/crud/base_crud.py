@@ -14,7 +14,7 @@ class BaseCRUD:
             result = await session.execute(query)
             await session.flush()
             await session.commit()
-            
+
             return result.scalars().all()
 
     @classmethod
@@ -25,17 +25,21 @@ class BaseCRUD:
             return result.scalars().all()
 
     @classmethod
-    async def update_one(cls, post_id: int, **data):
+    async def update_one(cls, post_id: int, data):
         async with new_session() as session:
-            query = update(cls.model).where(cls.model.id == post_id).values(data.model_dump())
+            query = (
+                update(cls.model)
+                .where(cls.model.id == post_id)
+                .values(data.model_dump())
+            )
 
             await session.execute(query)
             await session.commit()
             return data
 
     @classmethod
-    async def get_one_by_id(cls, todo_id: int):
+    async def get_one_by_id(cls, post_id: int):
         async with new_session() as session:
-            query = select(cls.model).filter_by(id=todo_id)
+            query = select(cls.model).filter_by(id=post_id)
             result = await session.execute(query)
             return result.scalars().one_or_none()
