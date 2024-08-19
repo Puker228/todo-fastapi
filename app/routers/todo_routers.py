@@ -9,9 +9,9 @@ router = APIRouter(prefix="/todo", tags=["todos"])
 
 
 @router.post("/new-todo/")
-async def new_todo(todo: Annotated[STodo, Depends()]) -> STodo_id:
+async def new_todo(todo: Annotated[STodo, Depends()]):
     todo_id = await ToDoCRUD.add_one(todo)
-    return {"todo_id": todo_id}
+    return todo
 
 
 @router.get("/all-todos/")
