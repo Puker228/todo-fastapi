@@ -28,4 +28,4 @@ class STodoResponce(BaseModel):
     important: bool = False
 
     class Config:
-        orm_mode = True
+        from_attributes = True
