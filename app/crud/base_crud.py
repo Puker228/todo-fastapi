@@ -5,17 +5,25 @@ from app.database import new_session
 
 class BaseCRUD:
     model = None
+    schema = None
 
     @classmethod
-    async def add_one(cls, data):
+    async def add_one(cls, data: schema):
         async with new_session() as session:
             data_dict = data.model_dump()
-            query = insert(cls.model).values(**data_dict)
+            query = insert(cls.model).values(data_dict).returning(cls.model.id)
             result = await session.execute(query)
             await session.flush()
             await session.commit()
 
-            return result.scalars().all()
+            new_id = result.scalar_one()
+
+            # Извлекаем полную информацию о новой записи
+            stmt = select(cls.model).where(cls.model.id == new_id)
+            result = await session.execute(stmt)
+            new_post = result.scalar_one()
+
+            return new_post
 
     @classmethod
     async def get_all(cls, **filter_by):
@@ -33,9 +41,10 @@ class BaseCRUD:
                 .values(data.model_dump())
             )
 
-            await session.execute(query)
+            result = await session.execute(query)
+            await session.flush()
             await session.commit()
-            return data
+            return result
 
     @classmethod
     async def get_one_by_id(cls, post_id: int):

@@ -3,7 +3,7 @@ from datetime import date
 
 
 class STodo(BaseModel):
-    name: str
+    todo_name: str
     description: str | None = None
     end_date: date | None = None
     important: bool = False
@@ -18,3 +18,14 @@ class STodo_id(BaseModel):
 
 class STodoById(STodo):
     id: int
+
+
+class STodoResponce(BaseModel):
+    id: int
+    todo_name: str
+    description: str | None = None
+    end_date: date | None = None
+    important: bool = False
+
+    class Config:
+        orm_mode = True
