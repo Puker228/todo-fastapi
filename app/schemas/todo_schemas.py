@@ -27,5 +27,4 @@ class STodoResponce(BaseModel):
     end_date: date | None = None
     important: bool = False
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)

@@ -1,15 +1,14 @@
-from fastapi import APIRouter, Depends
-from typing import Annotated
+from fastapi import APIRouter
 
 from app.crud.todo_crud import ToDoCRUD
-from app.schemas.todo_schemas import STodo, STodo_id, STodoById, STodoResponce
+from app.schemas.todo_schemas import STodo, STodoResponce
 
 
 router = APIRouter(prefix="/todo", tags=["todos"])
 
 
 @router.post("/new-todo/")
-async def add_new_todo(todo: Annotated[STodo, Depends()]) -> STodoResponce:
+async def add_new_todo(todo: STodo) -> STodoResponce:
     add_todo = await ToDoCRUD.add_one(todo)
     return add_todo
 
@@ -21,9 +20,7 @@ async def all_todos() -> list[STodo]:
 
 
 @router.put("/update-todo-by-id/")
-async def update_todo(
-    todo_id: int, new_data: Annotated[STodo, Depends()]
-) -> STodoResponce:
+async def update_todo(todo_id: int, new_data: STodo) -> STodoResponce:
     new_todo = await ToDoCRUD.update_one(post_id=todo_id, data=new_data)
     return new_todo
 
