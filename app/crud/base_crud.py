@@ -32,11 +32,11 @@ class BaseCRUD:
             return result.scalars().all()
 
     @classmethod
-    async def update_one(cls, post_id: int, data):
+    async def update_one(cls, post_name: str, data):
         async with new_session() as session:
             query = (
                 update(cls.model)
-                .where(cls.model.id == post_id)
+                .where(cls.model.todo_name == post_name)
                 .values(data.model_dump())
                 .returning(cls.model.id)
             )

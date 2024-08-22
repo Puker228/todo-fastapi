@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 
 from app.crud.todo_crud import ToDoCRUD
 from app.schemas.todo_schemas import STodo, STodoResponce
@@ -10,6 +10,8 @@ router = APIRouter(prefix="/todo", tags=["todos"])
 @router.post("/new-todo/")
 async def add_new_todo(todo: STodo) -> STodoResponce:
     add_todo = await ToDoCRUD.add_one(todo)
+    if not add_todo:
+        raise HTTPException(status_code=400, detail="Unable to add todo item.")
     return add_todo
 
 
@@ -19,9 +21,9 @@ async def all_todos() -> list[STodo]:
     return todos
 
 
-@router.put("/update-todo-by-id/")
-async def update_todo(todo_id: int, new_data: STodo) -> STodoResponce:
-    new_todo = await ToDoCRUD.update_one(post_id=todo_id, data=new_data)
+@router.put("/update-tod/{name}")
+async def update_todo(name: str, new_data: STodo) -> STodoResponce:
+    new_todo = await ToDoCRUD.update_one(post_name=name, data=new_data)
     return new_todo
 
 
