@@ -27,7 +27,7 @@ async def update_todo(name: str, new_data: STodo) -> STodoResponce:
     return new_todo
 
 
-@router.get("/get-one-by-id/")
-async def get_one_todo(todo_id: int) -> STodoResponce:
-    one_todo = await ToDoCRUD.get_one_by_id(todo_id)
+@router.get("/get-one/{name}")
+async def get_one_todo(name: str) -> STodoResponce:
+    one_todo = await ToDoCRUD.get_one_by_id(name)
     return one_todo

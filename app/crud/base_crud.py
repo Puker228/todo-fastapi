@@ -1,4 +1,5 @@
 from sqlalchemy import select, update, insert
+from sqlalchemy.exc import NoResultFound
 
 from app.database import new_session
 
@@ -55,8 +56,11 @@ class BaseCRUD:
             return new_post
 
     @classmethod
-    async def get_one_by_id(cls, post_id: int):
+    async def get_one_by_id(cls, post_name: str):
         async with new_session() as session:
-            query = select(cls.model).filter_by(id=post_id)
-            result = await session.execute(query)
-            return result.scalar_one()
+            try:
+                query = select(cls.model).filter_by(todo_name=post_name)
+                result = await session.execute(query)
+                return result.scalar_one()
+            except NoResultFound:
+                return None
