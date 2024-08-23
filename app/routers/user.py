@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, Depends
 
-from app.schemas.user_schemas import SUserRegister
-from app.crud.users_curd import UsersCRUD
+from app.schemas.user import SUserRegister
+from app.crud.users import UsersCRUD
 from auth.utils import get_password_hash
 
 

@@ -1,7 +1,7 @@
 from sqlalchemy import select, update, insert
 
 from app.database import new_session
-from app.models.users_model import Users
+from app.models.users import Users
 
 
 class UsersCRUD:

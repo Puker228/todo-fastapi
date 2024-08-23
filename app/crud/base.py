@@ -33,11 +33,11 @@ class BaseCRUD:
             return result.scalars().all()
 
     @classmethod
-    async def update_one(cls, post_name: str, data):
+    async def update_one(cls, post_id: int, data):
         async with new_session() as session:
             query = (
                 update(cls.model)
-                .where(cls.model.todo_name == post_name)
+                .where(cls.model.id == post_id)
                 .values(data.model_dump())
                 .returning(cls.model.id)
             )
@@ -56,10 +56,10 @@ class BaseCRUD:
             return new_post
 
     @classmethod
-    async def get_one_by_id(cls, post_name: str):
+    async def get_one_by_id(cls, post_id: int):
         async with new_session() as session:
             try:
-                query = select(cls.model).filter_by(todo_name=post_name)
+                query = select(cls.model).filter_by(id=post_id)
                 result = await session.execute(query)
                 return result.scalar_one()
             except NoResultFound:

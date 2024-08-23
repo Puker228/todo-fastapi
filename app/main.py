@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from contextlib import asynccontextmanager
 
 from app.database import init_models, drop_models
-from app.routers.todo_routers import router as todo_router
+from app.routers.todo import router as todo_router
 
 # from app.routers.user_routers import router as user_router
 

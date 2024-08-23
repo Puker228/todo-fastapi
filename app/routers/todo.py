@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException
 
-from app.crud.todo_crud import ToDoCRUD
-from app.schemas.todo_schemas import STodo, STodoResponce
+from app.crud.todo import ToDoCRUD
+from app.schemas.todo import STodo, STodoResponce
 
 
 router = APIRouter(prefix="/todo", tags=["todos"])
@@ -16,18 +16,18 @@ async def add_new_todo(todo: STodo) -> STodoResponce:
 
 
 @router.get("/all-todos/")
-async def all_todos() -> list[STodo]:
+async def all_todos() -> list[STodoResponce]:
     todos = await ToDoCRUD.get_all()
     return todos
 
 
 @router.put("/update-tod/{name}")
-async def update_todo(name: str, new_data: STodo) -> STodoResponce:
-    new_todo = await ToDoCRUD.update_one(post_name=name, data=new_data)
+async def update_todo(todo_id: int, new_data: STodo) -> STodoResponce:
+    new_todo = await ToDoCRUD.update_one(post_id=todo_id, data=new_data)
     return new_todo
 
 
 @router.get("/get-one/{name}")
-async def get_one_todo(name: str) -> STodoResponce:
-    one_todo = await ToDoCRUD.get_one_by_id(name)
+async def get_one_todo(todo_id: int) -> STodoResponce:
+    one_todo = await ToDoCRUD.get_one_by_id(todo_id)
     return one_todo
