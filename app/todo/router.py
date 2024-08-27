@@ -3,8 +3,8 @@ import time
 from fastapi import APIRouter, HTTPException
 from fastapi_cache.decorator import cache
 
-from app.crud.todo import ToDoCRUD
-from app.schemas.todo import STodo, STodoResponce
+from todo.crud import ToDoCRUD
+from todo.schema import STodoResponce, STodo
 
 router = APIRouter(prefix="/todo", tags=["todos"])
 

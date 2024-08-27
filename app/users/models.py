@@ -1,7 +1,4 @@
 from sqlalchemy.orm import Mapped, mapped_column
-from sqlalchemy import Date, Text
-from datetime import date
-from pydantic import EmailStr
 
 from app.database import Base
 
