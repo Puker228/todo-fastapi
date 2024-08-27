@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from contextlib import asynccontextmanager
+from asgi_lifespan import LifespanManager
 
 from app.database import init_models, drop_models
 from app.routers.todo import router as todo_router
@@ -9,9 +10,10 @@ from app.routers.todo import router as todo_router
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    await drop_models()
     await init_models()
     yield
-    await drop_models()
+
 
 
 app = FastAPI(lifespan=lifespan)
