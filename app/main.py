@@ -10,9 +10,10 @@ from app.routers.todo import router as todo_router
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    await drop_models()
     await init_models()
     yield
-    await drop_models()
+
 
 
 app = FastAPI(lifespan=lifespan)
