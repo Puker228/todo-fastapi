@@ -39,7 +39,7 @@ async def test_post_new_todo():
 @pytest.mark.anyio
 async def test_create_new_todo_bad_data():
     async with AsyncClient(
-            transport=ASGITransport(app=app), base_url="http://test"
+        transport=ASGITransport(app=app), base_url="http://test"
     ) as ac:
         todo_data = {
             "id": 1,
