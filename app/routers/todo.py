@@ -1,8 +1,10 @@
+import time
+
 from fastapi import APIRouter, HTTPException
+from fastapi_cache.decorator import cache
 
 from app.crud.todo import ToDoCRUD
 from app.schemas.todo import STodo, STodoResponce
-
 
 router = APIRouter(prefix="/todo", tags=["todos"])
 
@@ -16,7 +18,9 @@ async def add_new_todo(todo: STodo) -> STodoResponce:
 
 
 @router.get("/all-todos/")
+@cache(expire=60)
 async def all_todos() -> list[STodoResponce]:
+    time.sleep(10)  # test cache
     todos = await ToDoCRUD.get_all()
     return todos
 
