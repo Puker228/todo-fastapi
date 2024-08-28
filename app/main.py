@@ -1,14 +1,14 @@
-from fastapi import FastAPI
 from contextlib import asynccontextmanager
 
+from fastapi import FastAPI
 from fastapi_cache import FastAPICache
 from fastapi_cache.backends.redis import RedisBackend
 from fastapi_cache.decorator import cache
 from redis import asyncio as aioredis
 
-from database import drop_models, init_models
-from todo.router import router as todo_router
-from users.router import router as user_router
+from app.database import drop_models, init_models
+from app.todo.router import router as todo_router
+from app.users.router import router as user_router
 
 
 @asynccontextmanager

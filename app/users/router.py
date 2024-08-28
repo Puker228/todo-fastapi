@@ -1,9 +1,8 @@
 from fastapi import APIRouter, HTTPException, Depends
 
-from users.schema import SUserRegister
-from users.crud import UsersCRUD
 from auth.utils import get_password_hash
-
+from users.crud import UsersCRUD
+from users.schema import SUserRegister
 
 router = APIRouter(prefix="/auth", tags=["Auth and users"])
 
